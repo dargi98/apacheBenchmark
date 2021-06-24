@@ -30,13 +30,13 @@ Aquests són els resultats:
 
 ![Texto alternativo](tpslatencychart.png)
 
-Els resultats mostren que a mesura que s'incrementa la concurrència, les transaccions per segon augmenten fins que arriben a unes 20.000 aproximadament, on s'estabilitzen. Aquest punt és justament quan el nombre de transaccions concurrents coincideix amb el nombre de cores del sistema, 4. A partir d'aquí, un valor més alt de concurrència només introduïrà més latència, la qual és major a 1 ms a partir de 11 transaccions concurrents. Els resultats són lògics, ja que tenint 4 cores, el més eficient és asignar un core per transacció concurrent.
+Els resultats mostren que a mesura que s'incrementa la concurrència, les transaccions per segon augmenten fins que arriben a unes 20.000 aproximadament, on s'estabilitzen. Aquest punt és justament quan el nombre de transaccions concurrents coincideix amb el nombre de cores del sistema, 4. A partir d'aquí, un valor més alt de concurrència només introduirà més latència, la qual és major a 1 ms a partir de 11 transaccions concurrents. Els resultats són lògics, ja que tenint 4 cores, el més eficient és assignar un core per transacció concurrent.
 
 Respecte al percentatge d'ús de la CPU, s'incrementa a mesura que es van fent servir més cores, fins que es fan servir els 4, on l'ús s'estabilitza prop del 100%.
 
 
 
-### Paràmetre -k
+### Paràmetre -k 
 
 Aquest paràmetre serveix per habilitar la funció KeepAlive d'HTTP, que permet mantindre la connexió mentre encara estem fent transaccions al servidor, enlloc de reiniciar-la cada cop. Això comporta una millora de la eficiència, és a dir, menor latència.
 
