@@ -7,10 +7,10 @@ import (
 	"time"
 )
 
-var n, c, totalErrors int = 1000, 4, 0
+var n, c, totalErrors int = 1000, 300, 0
 var totalTime float64 = 0
 var k bool = false
-var address string = "http://172.17.0.1:8080/"
+var address string = "https://www.docker.com/"
 var client *http.Client
 
 func concurrentRequests(errorsCH chan int, it int) {
@@ -36,8 +36,8 @@ func concurrentRequests(errorsCH chan int, it int) {
 func goab() {
 	errorsCH := make(chan int, n)
 	for i := 0; i < c; i++ {
-		if i == c-1 {
-			go concurrentRequests(errorsCH, n/c+n%c)
+		if n%c != 0 && n%c > i {
+			go concurrentRequests(errorsCH, n/c+1)
 		} else {
 			go concurrentRequests(errorsCH, n/c)
 		}
@@ -74,7 +74,7 @@ func setParameters() {
 		initClient()
 	}
 
-	fmt.Println("Input server address or press 'enter' for default address: http://172.17.0.1:8080/")
+	fmt.Println("Input server address or press 'enter' for default address: https://www.docker.com")
 	fmt.Scanln(&ad)
 	if ad != "" {
 		address = ad
@@ -83,7 +83,7 @@ func setParameters() {
 
 func printResults() {
 	totalTime = totalTime / 1000000.0 // convert ns to ms
-	fmt.Println("Time of all transactions:", totalTime, "ms")
+	// fmt.Println("Time of all transactions:", totalTime, "ms")
 	fmt.Printf("Number of transactions per second, TPS: %.3f #/s \n", float64(n)/(totalTime/1000.0))
 	fmt.Printf("Average latency: %.3f ms \n", totalTime/float64(n))
 	fmt.Println("Amount of errors:", totalErrors)

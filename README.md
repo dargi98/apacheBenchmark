@@ -12,31 +12,35 @@ Autor: Sergi Gomà Cruells
 
 ### Paràmetre -c
 
-El paràmetre -c es fa servir per indicar quantes transaccions es fan a l'hora, és a dir, és un paràmetre per configurar la concurrència. Fent servir la comanda `docker run --rm jordi/ab -c 100 -n 100000 http://172.17.0.1:8080/`, faré 100.000 transaccions a un servidor aixecat amb docker, amb diversos valors de concurrència.
+El paràmetre -c es fa servir per indicar quantes transaccions es fan a l'hora, és a dir, és un paràmetre per configurar la concurrència. Fent servir la comanda `docker run --rm jordi/ab -c 10 -n 1000 http://www.docker.com/`, faré 1.000 transaccions a la web de docker, amb diversos valors de concurrència.
 
 Aquests són els resultats:
 
 | -c   | TPS (#/s) | Latency (ms) | CPU (%) |
-| ---- | --------- | ------------ | ------- |
-| 1    | 6052.8    | 0            | 39      |
-| 2    | 13381.71  | 0            | 69      |
-| 3    | 17875.96  | 0            | 89      |
-| 4    | 19914.9   | 0            | 95      |
-| 5    | 20500.2   | 0            | 96      |
-| 6    | 20026.33  | 0            | 97      |
-| 10   | 20763.52  | 0            | 98      |
-| 11   | 20868.41  | 1            | 98      |
-| 12   | 20520.28  | 1            | 98      |
+| ---- | --------- | :----------- | ------- |
+| 1    | 32.94     | 30           | 1.3     |
+| 2    | 65.77     | 30           | 2.6     |
+| 3    | 99.92     | 30           | 3.7     |
+| 4    | 132.44    | 30           | 5       |
+| 5    | 163.3     | 30           | 6       |
+| 6    | 196.33    | 30           | 7.5     |
+| 10   | 290.3     | 34           | 9.6     |
+| 20   | 337.36    | 58           | 11.3    |
+| 50   | 342.54    | 140          | 11      |
+| 80   | 340.29    | 225          | 10.8    |
+| 100  | 346.83    | 278          | 11.3    |
+| 150  | 351.72    | 404          | 11.1    |
+| 200  | 343.41    | 543          | 10.7    |
+| 250  | 333.38    | 662          | 10.9    |
+| 400  | 338.61    | 731          | 11.3    |
+| 500  | 347.11    | 910          | 11      |
 
 ![Texto alternativo](tpslatencychart.png)
 
-Els resultats mostren que a mesura que s'incrementa la concurrència, les transaccions per segon augmenten fins que arriben a unes 20.000 aproximadament, on s'estabilitzen. Aquest punt és justament quan el nombre de transaccions concurrents coincideix amb el nombre de cores del sistema, 4. A partir d'aquí, un valor més alt de concurrència només introduirà més latència, la qual és major a 1 ms a partir de 11 transaccions concurrents. Els resultats són lògics, ja que tenint 4 cores, el més eficient és assignar un core per transacció concurrent.
-
-Respecte al percentatge d'ús de la CPU, s'incrementa a mesura que es van fent servir més cores, fins que es fan servir els 4, on l'ús s'estabilitza prop del 100%.
+Els resultats mostren que a mesura que s'incrementa la concurrència, les transaccions per segon augmenten fins que arriben a unes 340 aproximadament i nivell de concurrència 20, on s'estabilitzen. A partir d'aquí, un valor més alt de concurrència només introduirà més latència, sense millorar el temps d'execució. Respecte al percentatge d'ús de la CPU, s'incrementa fins a una utilització al voltant del 10%, que coincideix amb un nivell de concurrència 20.
 
 
 
 ### Paràmetre -k 
 
 Aquest paràmetre serveix per habilitar la funció KeepAlive d'HTTP, que permet mantindre la connexió mentre encara estem fent transaccions al servidor, enlloc de reiniciar-la cada cop. Això comporta una millora de la eficiència, és a dir, menor latència.
-
