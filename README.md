@@ -8,6 +8,8 @@ Autor: Sergi Gomà Cruells
 
 *Totes les proves s'han realitzat amb un processador i7-7700k de quatre cores a 4,82 GHz.*
 
+
+
 ### Paràmetre -c
 
 El paràmetre -c es fa servir per indicar quantes transaccions es fan a l'hora, és a dir, és un paràmetre per configurar la concurrència. Fent servir la comanda `docker run --rm jordi/ab -c 10 -n 1000 https://www.docker.com/`, faré 1000 transaccions a la web de docker, amb diversos valors de concurrència.
