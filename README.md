@@ -8,8 +8,6 @@ Autor: Sergi Gomà Cruells
 
 *Totes les proves s'han realitzat amb un processador i7-7700k de quatre cores a 4,82 GHz.*
 
-
-
 ### Paràmetre -c
 
 El paràmetre -c es fa servir per indicar quantes transaccions es fan a l'hora, és a dir, és un paràmetre per configurar la concurrència. Fent servir la comanda `docker run --rm jordi/ab -c 10 -n 1000 https://www.docker.com/`, faré 1000 transaccions a la web de docker, amb diversos valors de concurrència.
@@ -41,13 +39,11 @@ Aquest paràmetre serveix per habilitar la funció KeepAlive d'HTTP, que permet 
 
 
 
-
-
 ## Implementació amb Go
 
-Un cop feta la implementació amb Go, els resultats, extrets amb les mateixes condicions que a l'apartat anterior, són bastants similars a apache benchmark, amb la diferència de que les TPS arriben fins a 1100, i la latència es redueix fins a 1 ms.
+La implementació de apache benchmark amb Go es troba a goab.go, i per executar-lo només cal escriure la comanda `go run goab.go`
 
-Per executar-ho, només cal escriure la comanda `go run goab.go`
+Els resultats, extrets amb les mateixes condicions que a l'apartat anterior, són bastants similars a apache benchmark, amb la diferència de que les TPS arriben fins a 1100, i la latència es redueix fins a 1 ms.
 
 | -c   | TPS (#/s) | Latency (ms) |
 | ---- | --------- | ------------ |

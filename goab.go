@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -28,6 +29,7 @@ func concurrentRequests(errorsCH chan int, it int) {
 			errorsCH <- 1
 		} else {
 			errorsCH <- 0
+			ioutil.ReadAll(resp.Body)
 			resp.Body.Close()
 		}
 	}
