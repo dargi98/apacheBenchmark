@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var n, c, totalErrors int = 1000, 300, 0
+var n, c, totalErrors int = 1000, 36, 0
 var totalTime float64 = 0
 var k bool = false
 var address string = "https://www.docker.com/"
@@ -42,7 +42,7 @@ func goab() {
 			go concurrentRequests(errorsCH, n/c)
 		}
 	}
-	// Retrieve error values, and make sure that goroutines end
+	// Retrieve error values, and make sure that goroutines finish
 	for i := 0; i < n; i++ {
 		totalErrors += <-errorsCH
 	}
@@ -59,25 +59,25 @@ func initClient() {
 func setParameters() {
 	var cs, ns, ks, ad string
 
-	fmt.Println("Input c parameter")
+	fmt.Println("Input c parameter (default is 1)")
 	fmt.Scanln(&cs)
 	c, _ = strconv.Atoi(cs)
 
-	fmt.Println("Input n parameter")
+	fmt.Println("Input n parameter (default is 1)")
 	fmt.Scanln(&ns)
 	n, _ = strconv.Atoi(ns)
 
-	fmt.Println("Input 'y' for k = true, 'n' otherwise")
+	fmt.Println("Input 1 for k = true (default is false)")
 	fmt.Scanln(&ks)
-	if ks == "y" {
+	if ks == "1" {
 		k = true
 		initClient()
 	}
 
-	fmt.Println("Input server address or press 'enter' for default address: https://www.docker.com")
+	fmt.Println("If the go server is running, input 1 for http://localhost:8080/ (default is https://www.docker.com/)")
 	fmt.Scanln(&ad)
-	if ad != "" {
-		address = ad
+	if ad == "1" {
+		address = "http://localhost:8080/"
 	}
 }
 
@@ -92,11 +92,10 @@ func printResults() {
 }
 
 func main() {
-	// setParameters()
-
+	setParameters()
+	fmt.Println("Benchmarking...")
 	start := time.Now()
 	goab()
 	totalTime = float64(time.Since(start))
-
 	printResults()
 }
